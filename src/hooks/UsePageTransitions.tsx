@@ -1,17 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function UsePageTransitions() {
   const navigate = useNavigate();
-  let isInitialLoad = true; // Track if it's the initial load
+  const isInitialLoadRef = useRef(true); // Use useRef to persist the value across renders
 
   useEffect(() => {
     const addRenderClass = setTimeout(() => {
-      if (isInitialLoad) {
+      if (isInitialLoadRef.current) {
         // Initial fade-in effect
         document.body.classList.remove('fade-out');
         document.body.classList.add('render');
-        isInitialLoad = false; // Ensure this runs only on the initial load
+        isInitialLoadRef.current = false; // Ensure this runs only on the initial load
       }
     }, 60);
 
