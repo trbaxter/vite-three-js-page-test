@@ -193,21 +193,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/*!* Fade effect *!*/
-/*.js body {*/
-/*    opacity: 0;*/
-/*    transition: opacity 1s ease-in;*/
-/*}*/
-
-/*.js body.render {*/
-/*    opacity: 1;*/
-/*}*/
-
-/*.js body.fade-out {*/
-/*    opacity: 0;*/
-/*    transition: opacity 1s ease-out;*/
-/*}*/
-
 a {
     text-decoration: none;
     color: var(--color-link);
