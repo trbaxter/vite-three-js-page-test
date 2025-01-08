@@ -1,0 +1,27 @@
+#root, html, body, canvas {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    /*opacity: 0; !* Start invisible *!*/
+    transition: opacity 1s ease-in-out;
+    color: black; /* Ensure text color stays consistent */
+    background-color: black; /* Ensure background stays black */
+}
+
+body.render {
+    opacity: 1; /* Fully visible when rendered*/
+}
+
+body.fade-out {
+    opacity: 0; /* Fade to black during transition */
+}
+
+body.initializing {
+    opacity: 0; /* Ensure the initial black state */
+    transition: none; /* Disable transitions during the initial load setup */
+}
