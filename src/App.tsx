@@ -36,7 +36,6 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={<HomepageAnimation />} />
-        <Route path="/homepage" element={<HomepageAnimation />} />
         <Route path="/ai" element={<BrainAnimation />} />
       </Routes>
     </>

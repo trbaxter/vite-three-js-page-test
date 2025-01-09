@@ -11,15 +11,15 @@ function Navigation() {
 
 
   return (
-    <nav style={{ display: 'flex', gap: '1rem', padding: '1rem', background: '#333', color: '#fff' }}>
+    <nav style={{ display: 'flex', gap: '0.5rem', padding: '1rem', background: '#000', color: '#ffffff' }}>
       <button
-        onClick={() => !isActive('/homepage') && handleNavigation('/homepage')}
+        onClick={() => !isActive('/') && handleNavigation('/')}
         style={{
           background: 'none',
           color: 'white',
           border: 'none',
-          pointerEvents: isActive('/homepage') ? 'none' : 'auto', // Disable pointer events for active route
-          cursor: isActive('/homepage') ? 'default' : 'pointer', // Neutral cursor for non-interactive button
+          pointerEvents: isActive('/') ? 'none' : 'auto', // Disable pointer events for active route
+          cursor: isActive('/') ? 'default' : 'pointer', // Neutral cursor for non-interactive button
         }}
       >
         Homepage

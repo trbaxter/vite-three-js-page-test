@@ -9,8 +9,8 @@
 body {
     /*opacity: 0; !* Start invisible *!*/
     transition: opacity 1s ease-in-out;
-    color: black; /* Ensure text color stays consistent */
-    background-color: black; /* Ensure background stays black */
+    color: #000000; /* Ensure text color stays consistent */
+    background-color: #000000; /* Ensure background stays black */
 }
 
 body.render {
