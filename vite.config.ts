@@ -4,7 +4,7 @@ export default defineConfig({
     server: {
         hmr: true,
         watch: {
-            usePolling: true, // optional, if needed for your environment
+            usePolling: true,
         },
     },
 })

@@ -6,9 +6,7 @@ function Navigation() {
   const handleNavigation = UsePageTransitions();
   const location = useLocation();
 
-  // Helper to check if the given path is the current route
   const isActive = (path: string) => location.pathname === path;
-
 
   return (
     <nav style={{ display: 'flex', gap: '0.5rem', padding: '1rem', background: '#000', color: '#ffffff' }}>

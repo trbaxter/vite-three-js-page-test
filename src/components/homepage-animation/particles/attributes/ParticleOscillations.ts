@@ -1,5 +1,5 @@
 export const ParticleOscillations = {
-  percentage: 0.8,
+  percentage: 1,
 
   ParticleOscillations(count: number): number[] {
     const indices = [];
@@ -17,5 +17,5 @@ export function CalculateOscillation(time: number,
                                      amplitude: number = 2,
                                      frequency: number = 1.1): number {
 
-  return 3*Math.sin(frequency * time + index) + amplitude;
+  return Math.sin(frequency/2.5 * (10*time) + index) + amplitude;
 }

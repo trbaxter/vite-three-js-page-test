@@ -13,13 +13,10 @@ export function HandleFrameAnimation(
     if (!particlesRef.current) return;
 
     const time = clock.getElapsedTime();
-
-    // Update positions for all oscillating particles
     oscillatingIndices.forEach((index) => {
       UpdateParticlePosition(index, positions, time);
     });
 
-    // Update the geometry
     updateGeometry(particlesRef.current);
   });
 }

@@ -17,21 +17,20 @@ export function UsePageTransitions() {
 
     return () => {
       clearTimeout(addRenderClass);
-      document.body.classList.remove('render', 'fade-out'); // Cleanup classes
+      document.body.classList.remove('render', 'fade-out');
     };
   }, []);
 
   return (path: string) => {
-    // Fade-out effect for page transitions
     document.body.classList.remove('render');
     document.body.classList.add('fade-out');
 
     const navigateAfterFade = () => {
-      document.body.classList.remove('fade-out'); // Reset fade-out
-      navigate(path); // Navigate to the target page
+      document.body.classList.remove('fade-out');
+      navigate(path);
     };
 
-    const timeout = setTimeout(navigateAfterFade, 1000); // Fallback timeout
+    const timeout = setTimeout(navigateAfterFade, 1000);
 
     document.body.addEventListener(
       'transitionend',
