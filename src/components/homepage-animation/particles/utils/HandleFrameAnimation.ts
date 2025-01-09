@@ -1,11 +1,11 @@
 import { useFrame } from '@react-three/fiber';
 import { updateGeometry } from '../calculations/UpdateGeometry.ts';
 import { MutableRefObject } from 'react';
-import * as THREE from 'three';
 import { UpdateParticlePosition } from '../calculations/updatePositioning.ts';
+import { BufferGeometry } from 'three';
 
 export function HandleFrameAnimation(
-  particlesRef: MutableRefObject<THREE.BufferGeometry | null>,
+  particlesRef: MutableRefObject<BufferGeometry | null>,
   oscillatingIndices: number[],
   positions: Float32Array
 ) {
