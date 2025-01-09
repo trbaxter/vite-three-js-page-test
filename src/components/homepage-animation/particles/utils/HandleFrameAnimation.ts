@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber';
-import { updateGeometry } from '../calculations/updateGeometry';
+import { updateGeometry } from '../calculations/UpdateGeometry.ts';
 import { MutableRefObject } from 'react';
 import * as THREE from 'three';
 import { UpdateParticlePosition } from '../calculations/updatePositioning.ts';

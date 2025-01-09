@@ -1,39 +1,38 @@
 import React, { forwardRef, useEffect } from 'react';
-import { UseCombinedAttributes } from './attributes/useCombinedAttributes';
-import { combinedShaders } from './shaders/combinedShaders';
-import { invalidate } from '@react-three/fiber';
+import { CombinedShaders } from './shaders/CombinedShaders.ts';
+import { CombinedAttributes } from './attributes/CombinedAttributes.ts';
+import { HandleFrameAnimation } from './utils/HandleFrameAnimation.ts';
+import { useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import { HandleFrameAnimation } from './utils/frameHandler';
 
-export const Particles = forwardRef<THREE.BufferGeometry, {}>((_, ref) => {
-  const mutableRef = ref as React.MutableRefObject<THREE.BufferGeometry | null>;
+export const Particles = forwardRef<THREE.BufferGeometry>((_, ref) => {
 
-  // Use particle attributes
-  const particles = UseCombinedAttributes();
+  const shaders = CombinedShaders();
+  const particles = CombinedAttributes();
 
-  // Hook to handle frame animations
-  HandleFrameAnimation(mutableRef, particles.oscillatingIndices, particles.positions);
+  HandleFrameAnimation(ref as React.MutableRefObject<THREE.BufferGeometry>,
+    particles.oscillatingIndices, particles.positions);
 
-  // Update Three.js attributes dynamically
+  const { gl } = useThree();
+
   useEffect(() => {
-    if (mutableRef.current) {
-      const geometry = mutableRef.current;
+    const handleResize = () => {
+      const pixelRatio = Math.min(window.devicePixelRatio, 10);
+      gl.setPixelRatio(pixelRatio);
+      gl.setSize(window.innerWidth, window.innerHeight);
+    };
 
-      // Replace the color attribute with a new instance
-      geometry.setAttribute(
-        'color',
-        new THREE.BufferAttribute(particles.colors, 3)
-      );
+    handleResize();
 
-      // Force React Three Fiber to re-render
-      invalidate();
-    }
-  }, [particles.colors]);
-
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [gl]);
 
   return (
     <points>
-      <bufferGeometry ref={mutableRef}>
+      <bufferGeometry ref={ref}>
         <bufferAttribute
           attach="attributes-position"
           array={particles.positions}
@@ -44,7 +43,7 @@ export const Particles = forwardRef<THREE.BufferGeometry, {}>((_, ref) => {
           attach="attributes-color"
           array={particles.colors}
           itemSize={3}
-          count={particles.colors.length / 3}
+          count={particles.colors.length}
         />
         <bufferAttribute
           attach="attributes-size"
@@ -59,15 +58,7 @@ export const Particles = forwardRef<THREE.BufferGeometry, {}>((_, ref) => {
           count={particles.opacities.length}
         />
       </bufferGeometry>
-      <primitive object={combinedShaders()} attach="material" />
+      <primitive object={shaders} attach="material" />
     </points>
   );
 });
-
-// Add HMR support
-if (import.meta.hot) {
-  import.meta.hot.accept(() => {
-    console.log('Particles component updated via HMR');
-    invalidate();
-  });
-}

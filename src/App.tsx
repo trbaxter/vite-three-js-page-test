@@ -4,8 +4,6 @@ import { BrainAnimation } from './components/brain-animation/BrainAnimation.tsx'
 import { HomepageAnimation } from './components/homepage-animation/HomepageAnimation.tsx';
 import { useEffect } from 'react';
 
-
-
 function App() {
   const location = useLocation();
 

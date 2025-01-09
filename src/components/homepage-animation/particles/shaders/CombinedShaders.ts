@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import { vertexShader } from './vertexShader.ts';
-import { fragmentShader } from './fragmentShader.ts';
+import { vertexShader } from './VertexShader.ts';
+import { fragmentShader } from './FragmentShader.ts';
 
-export function combinedShaders() {
+export function CombinedShaders() {
   return new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,

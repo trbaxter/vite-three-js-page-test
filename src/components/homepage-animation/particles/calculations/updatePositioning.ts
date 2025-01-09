@@ -1,6 +1,6 @@
-import { CalculateRadialDirection } from './radialDirections';
-import { CalculateOscillation } from './oscillations';
-import { initialParticlePositions } from '../attributes/particlePositions';
+import { CalculateRadialDirection } from './RadialDirections.ts';
+import { CalculateOscillation } from '../attributes/ParticleOscillations.ts';
+import { initialParticlePositions } from '../attributes/ParticlePositions.ts';
 
 export function UpdateParticlePosition(
   index: number,

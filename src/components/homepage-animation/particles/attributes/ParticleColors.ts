@@ -16,10 +16,3 @@ export function ParticleColors(count: number): Float32Array {
 
   return colors;
 }
-
-// Add HMR support
-if (import.meta.hot) {
-  import.meta.hot.accept(() => {
-    console.log('ParticleColors updated via HMR');
-  });
-}
