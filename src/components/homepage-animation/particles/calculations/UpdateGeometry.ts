@@ -1,6 +1,8 @@
-import * as THREE from 'three';
+import { BufferGeometry } from 'three';
 
-export function updateGeometry(geometry: THREE.BufferGeometry) {
+export function updateGeometry(geometry: BufferGeometry) {
+
   geometry.attributes.position.needsUpdate = true;
+
 }
 

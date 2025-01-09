@@ -1,9 +1,13 @@
-import * as THREE from 'three';
+import { Vector3 } from 'three';
 
 export function CalculateRadialDirection(x: number,
                                          y: number,
-                                         z: number): THREE.Vector3 {
+                                         z: number): Vector3 {
 
   const radius = Math.sqrt(x**2 + y**2 + z**2);
-  return new THREE.Vector3(x / radius, y / radius, z / radius);
+
+  return new Vector3(x / radius,
+                     y / radius,
+                     z / radius);
+
 }
