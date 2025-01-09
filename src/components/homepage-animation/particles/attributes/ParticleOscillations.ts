@@ -1,14 +1,17 @@
 export const ParticleOscillations = {
-  percentage: 1,
+  percentage: 0.5,
 
   ParticleOscillations(count: number): number[] {
+
     const indices = [];
     for (let i = 0; i < count; i++) {
       if (Math.random() < this.percentage) {
         indices.push(i);
       }
     }
+
     return indices;
+
   }
 }
 
