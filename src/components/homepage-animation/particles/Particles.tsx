@@ -3,14 +3,14 @@ import { CombinedShaders } from './shaders/CombinedShaders.ts';
 import { CombinedAttributes } from './attributes/CombinedAttributes.ts';
 import { HandleFrameAnimation } from './utils/HandleFrameAnimation.ts';
 import { useThree } from '@react-three/fiber';
-import * as THREE from 'three';
+import { BufferGeometry } from 'three';
 
-export const Particles = forwardRef<THREE.BufferGeometry>((_, ref) => {
+export const Particles = forwardRef<BufferGeometry>((_, ref) => {
 
   const shaders = CombinedShaders();
   const particles = CombinedAttributes();
 
-  HandleFrameAnimation(ref as React.MutableRefObject<THREE.BufferGeometry>,
+  HandleFrameAnimation(ref as React.MutableRefObject<BufferGeometry>,
     particles.oscillatingIndices, particles.positions);
 
   const { gl } = useThree();
