@@ -9,11 +9,10 @@ export const Particles = forwardRef<BufferGeometry>((_, ref) => {
 
   const shaders = combinedShaders();
   const particles = combinedAttributes();
+  const { gl } = useThree();
 
   HandleFrameAnimation(ref as React.MutableRefObject<BufferGeometry>,
     particles.oscillatingIndices, particles.positions);
-
-  const { gl } = useThree();
 
   useEffect(() => {
     const handleResize = () => {
