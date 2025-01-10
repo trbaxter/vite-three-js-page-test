@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 function Navigation() {
   const handleNavigation = UsePageTransitions();
   const location = useLocation();
-
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -16,8 +15,8 @@ function Navigation() {
           background: 'none',
           color: 'white',
           border: 'none',
-          pointerEvents: isActive('/') ? 'none' : 'auto', // Disable pointer events for active route
-          cursor: isActive('/') ? 'default' : 'pointer', // Neutral cursor for non-interactive button
+          pointerEvents: isActive('/') ? 'none' : 'auto',
+          cursor: isActive('/') ? 'default' : 'pointer',
         }}
       >
         Homepage
@@ -28,8 +27,8 @@ function Navigation() {
           background: 'none',
           color: 'white',
           border: 'none',
-          pointerEvents: isActive('/ai') ? 'none' : 'auto', // Disable pointer events for active route
-          cursor: isActive('/ai') ? 'default' : 'pointer', // Neutral cursor for non-interactive button
+          pointerEvents: isActive('/ai') ? 'none' : 'auto',
+          cursor: isActive('/ai') ? 'default' : 'pointer',
         }}
       >
         DART AI
