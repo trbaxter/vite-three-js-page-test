@@ -1,5 +1,5 @@
 import Navigation from './components/navigation/HandleNavigation.tsx';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { BrainAnimation } from './components/brain-animation/BrainAnimation.tsx';
 import { HomepageAnimation } from './components/homepage-animation/HomepageAnimation.tsx';
 
