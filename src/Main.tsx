@@ -7,7 +7,6 @@ import { StrictMode } from 'react';
 document.body.classList.add('render');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-
   <StrictMode>
     <BrowserRouter>
       <App />

@@ -16,7 +16,7 @@ function Navigation() {
           color: 'white',
           border: 'none',
           pointerEvents: isActive('/') ? 'none' : 'auto',
-          cursor: isActive('/') ? 'default' : 'pointer',
+          cursor: isActive('/') ? 'default' : 'pointer'
         }}
       >
         Homepage
@@ -28,7 +28,7 @@ function Navigation() {
           color: 'white',
           border: 'none',
           pointerEvents: isActive('/ai') ? 'none' : 'auto',
-          cursor: isActive('/ai') ? 'default' : 'pointer',
+          cursor: isActive('/ai') ? 'default' : 'pointer'
         }}
       >
         DART AI

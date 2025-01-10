@@ -11,7 +11,7 @@ export function HomepageAnimation() {
       camera={{ position: [0, 0, 350], fov: 50 }}
       gl={{
         antialias: true,
-        toneMapping: ACESFilmicToneMapping,
+        toneMapping: ACESFilmicToneMapping
       }}
       onCreated={({ gl }) => {
         gl.toneMappingExposure = 2.5;

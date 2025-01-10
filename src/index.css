@@ -7,9 +7,7 @@
 }
 
 body {
-    /*opacity: 0; !* Start invisible *!*/
     transition: opacity 1s ease-in-out;
-    color: #000000; /* Ensure text color stays consistent */
     background-color: #000000; /* Ensure background stays black */
 }
 

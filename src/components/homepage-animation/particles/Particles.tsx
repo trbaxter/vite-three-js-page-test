@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import { forwardRef, MutableRefObject, useEffect } from 'react';
 import { combinedShaders } from './shaders/combinedShaders.ts';
 import { combinedAttributes } from './attributes/combinedAttributes.ts';
 import { HandleFrameAnimation } from './utils/HandleFrameAnimation.ts';
@@ -11,7 +11,7 @@ export const Particles = forwardRef<BufferGeometry>((_, ref) => {
   const particles = combinedAttributes();
   const { gl } = useThree();
 
-  HandleFrameAnimation(ref as React.MutableRefObject<BufferGeometry>,
+  HandleFrameAnimation(ref as MutableRefObject<BufferGeometry>,
     particles.oscillatingIndices, particles.positions);
 
   useEffect(() => {

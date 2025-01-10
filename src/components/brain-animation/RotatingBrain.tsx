@@ -1,9 +1,9 @@
-import React from 'react';
-import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { Group } from 'three';
+import { ReactNode, useRef } from 'react';
 
-export function RotatingBrain({ children }: { children: React.ReactNode}) {
-  const groupRef = React.useRef<THREE.Group>(null!)
+export function RotatingBrain({ children }: { children: ReactNode }) {
+  const groupRef = useRef<Group>(null!);
 
   useFrame(() => {
     if (groupRef.current) {
@@ -11,5 +11,5 @@ export function RotatingBrain({ children }: { children: React.ReactNode}) {
     }
   });
 
-  return <group ref={groupRef}>{children}</group>
+  return <group ref={groupRef}>{children}</group>;
 }

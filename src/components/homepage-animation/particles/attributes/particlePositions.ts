@@ -17,16 +17,14 @@ export function particlePositions(count = particleCount.count): Float32Array {
     const y = Math.sin(phi);
     const z = Math.sin(theta) * Math.cos(phi);
     const baseRadius = particleRadius.baseRadius +
-                               (Math.random() - 0.5) *
-                               particleRadius.radiusVariation;
+      (Math.random() - 0.5) *
+      particleRadius.radiusVariation;
 
     const scaled = new Vector3(x, y, z).multiplyScalar(baseRadius);
 
     positions.set([scaled.x, scaled.y, scaled.z], i * 3);
   }
-
   return positions;
-
 }
 
 export const initialParticlePositions = particlePositions();

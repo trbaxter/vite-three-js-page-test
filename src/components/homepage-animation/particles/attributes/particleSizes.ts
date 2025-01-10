@@ -4,7 +4,7 @@ export function particleSizes(count: number): Float32Array {
 
   for (let i = 0; i < count; i++) {
 
-    sizes[i] = (1.5*Math.random())**2;
+    sizes[i] = (1.5 * Math.random()) ** 2;
 
   }
 
