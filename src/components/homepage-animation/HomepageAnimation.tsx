@@ -1,17 +1,17 @@
 import { Canvas } from '@react-three/fiber';
 import { Particles } from './particles/Particles.tsx';
 import { useRef } from 'react';
-import * as THREE from 'three';
+import { ACESFilmicToneMapping, BufferGeometry } from 'three';
 
 export function HomepageAnimation() {
-  const particlesRef = useRef<THREE.BufferGeometry>(null);
+  const particlesRef = useRef<BufferGeometry>(null);
 
   return (
     <Canvas
       camera={{ position: [0, 0, 350], fov: 50 }}
       gl={{
         antialias: true,
-        toneMapping: THREE.ACESFilmicToneMapping,
+        toneMapping: ACESFilmicToneMapping,
       }}
       onCreated={({ gl }) => {
         gl.toneMappingExposure = 2.5;
