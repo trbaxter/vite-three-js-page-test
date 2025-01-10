@@ -12,7 +12,7 @@ export function UpdateParticlePosition(index: number,
   const direction = radialDirections(x, y, z);
   const oscillation = calculateOscillation(time, index);
   const newPosition = direction.multiplyScalar(
-    Math.sqrt(x**2 + y**2 + z**2) + oscillation);
+    Math.sqrt(x ** 2 + y ** 2 + z ** 2) + oscillation);
   positions[index * 3] = newPosition.x;
   positions[index * 3 + 1] = newPosition.y;
   positions[index * 3 + 2] = newPosition.z;
