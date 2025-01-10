@@ -1,6 +1,6 @@
 import { Color } from 'three';
 
-export function ParticleColors(count: number): Float32Array {
+export function particleColors(count: number): Float32Array {
   const colors = new Float32Array(count * 3);
 
   const colorOptions = [

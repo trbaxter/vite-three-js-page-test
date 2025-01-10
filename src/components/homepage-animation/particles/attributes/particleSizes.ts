@@ -1,4 +1,4 @@
-export function ParticleSizes(count: number): Float32Array {
+export function particleSizes(count: number): Float32Array {
 
   const sizes = new Float32Array(count);
 

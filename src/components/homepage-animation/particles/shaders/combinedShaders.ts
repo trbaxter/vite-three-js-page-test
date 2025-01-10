@@ -2,7 +2,7 @@ import { vertexShader } from './vertexShader.ts';
 import { fragmentShader } from './fragmentShader.ts';
 import { AdditiveBlending, ShaderMaterial } from 'three';
 
-export function CombinedShaders() {
+export function combinedShaders() {
 
   return new ShaderMaterial(
     {

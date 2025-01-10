@@ -1,8 +1,8 @@
-import { ParticleCount } from './ParticleCount.ts';
-import { particleRadius } from './ParticleRadius.ts';
+import { particleCount } from './particleCount.ts';
+import { particleRadius } from './particleRadius.ts';
 import { Vector3 } from 'three';
 
-export function ParticlePositions(count = ParticleCount.count): Float32Array {
+export function particlePositions(count = particleCount.count): Float32Array {
 
   const positions = new Float32Array(count * 3);
 
@@ -29,4 +29,4 @@ export function ParticlePositions(count = ParticleCount.count): Float32Array {
 
 }
 
-export const initialParticlePositions = ParticlePositions();
+export const initialParticlePositions = particlePositions();

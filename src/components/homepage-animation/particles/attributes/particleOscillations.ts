@@ -1,7 +1,7 @@
-export const ParticleOscillations = {
+export const particleOscillations = {
   percentage: 0.5,
 
-  ParticleOscillations(count: number): number[] {
+  particleOscillations(count: number): number[] {
 
     const indices = [];
     for (let i = 0; i < count; i++) {
@@ -15,7 +15,7 @@ export const ParticleOscillations = {
   }
 }
 
-export function CalculateOscillation(time: number,
+export function calculateOscillation(time: number,
                                      index: number,
                                      amplitude: number = 2,
                                      frequency: number = 1.1): number {

@@ -1,4 +1,4 @@
-export function ParticleOpacities(count: number): Float32Array {
+export function particleOpacities(count: number): Float32Array {
   const opacities = new Float32Array(count);
 
   for (let i = 0; i < count; i++) {
