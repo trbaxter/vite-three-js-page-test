@@ -4,10 +4,10 @@ import react from '@vitejs/plugin-react-swc';
 export default defineConfig({
     plugins: [react()],
     server: {
-        hmr: true,
+        hmr: { overlay: true },
         watch: {
             usePolling: true,
+            interval: 100
         },
     },
-})
-
+});
