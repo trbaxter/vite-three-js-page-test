@@ -11,7 +11,7 @@ export default function App() {
     const isInitialLoad = !document.body.classList.contains('render');
 
     if (isInitialLoad) {
-      // Initial load: Ensure the fade-out state is visible
+
       document.body.classList.add('initializing');
       setTimeout(() => {
         document.body.classList.remove('fade-out', 'initializing');
