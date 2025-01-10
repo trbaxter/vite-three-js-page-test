@@ -4,7 +4,7 @@ import { BrainAnimation } from './components/brain-animation/BrainAnimation.tsx'
 import { HomepageAnimation } from './components/homepage-animation/HomepageAnimation.tsx';
 import { useEffect } from 'react';
 
-function App() {
+export default function App() {
   const location = useLocation();
 
   useEffect(() => {
@@ -26,9 +26,6 @@ function App() {
     }
   }, [location]);
 
-
-
-
   return (
     <>
       <Navigation />
@@ -40,4 +37,4 @@ function App() {
   );
 }
 
-export default App;
+
