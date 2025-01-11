@@ -6,7 +6,7 @@ export function particleColors(count: number): Float32Array {
   const colorOptions = [
     new Color(0x34fa76), // Green
     new Color(0x96789f), // Dark magenta
-    new Color(0x00FFFF)  // Electric cyan
+    // new Color(0x00FFFF)  // Electric cyan
   ];
 
   for (let i = 0; i < count; i++) {
