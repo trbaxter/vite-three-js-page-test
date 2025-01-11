@@ -1,30 +1,30 @@
-import { particleCount } from './particleCount.ts';
-import { particleRadius } from './particleRadius.ts';
-import { Vector3 } from 'three';
+import { calculateRadialDirection } from './particleDirectionality.ts';
+import { calculateOscillation } from './particleOscillations.ts';
+import { particleConfig } from '../calculations/updateGeometry';
 
-export function particlePositions(count = particleCount.count): Float32Array {
-
-  const positions = new Float32Array(count * 3);
+/**
+ * Updates positions for all particles dynamically based on time and oscillation.
+ * @param positions Float32Array of current particle positions.
+ * @param time Current animation time.
+ */
+export function updateAllParticlePositions(
+  positions: Float32Array,
+  time: number
+): void {
+  const count = particleConfig.particleCount;
 
   for (let i = 0; i < count; i++) {
-    const theta = Math.random() * Math.PI * 2;
-    const phi =
-      (1 - Math.sqrt(Math.random())) *
-      (Math.PI / 2) *
-      (Math.random() > 0.5 ? 1 : -1);
+    const x = positions[i * 3];
+    const y = positions[i * 3 + 1];
+    const z = positions[i * 3 + 2];
 
-    const x = Math.cos(theta) * Math.cos(phi);
-    const y = Math.sin(phi);
-    const z = Math.sin(theta) * Math.cos(phi);
-    const baseRadius = particleRadius.baseRadius +
-      (Math.random() - 0.5) *
-      particleRadius.radiusVariation;
+    const direction = calculateRadialDirection(x, y, z);
+    const oscillation = calculateOscillation(time, i, particleConfig.oscillation.amplitude, particleConfig.oscillation.frequency);
 
-    const scaled = new Vector3(x, y, z).multiplyScalar(baseRadius);
+    const newPosition = direction.multiplyScalar(
+      Math.sqrt(x ** 2 + y ** 2 + z ** 2) + oscillation
+    );
 
-    positions.set([scaled.x, scaled.y, scaled.z], i * 3);
+    positions.set([newPosition.x, newPosition.y, newPosition.z], i * 3);
   }
-  return positions;
 }
-
-export const initialParticlePositions = particlePositions();
