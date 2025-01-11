@@ -11,17 +11,15 @@ export const Particles = forwardRef<BufferGeometry, unknown>((_, ref) => {
 
   // Handle dynamic updates when ref or animation state changes
   useEffect(() => {
-    if (typeof ref === 'function' || !ref || !(ref as MutableRefObject<BufferGeometry>).current) {
-      return;
+    if (typeof ref === 'function' || !ref || !(
+      ref as MutableRefObject<BufferGeometry>).current) {
+        return;
     }
 
     const geometry = (ref as MutableRefObject<BufferGeometry>).current;
 
-    console.time('Combined Attributes');
     const newAnimationState = combinedAttributes();
-    console.timeEnd('Combined Attributes');
 
-    console.time('GPU Sync')
     // Update position
     geometry.attributes.position.array.set(newAnimationState.positions);
     geometry.attributes.position.needsUpdate = true;
@@ -37,7 +35,6 @@ export const Particles = forwardRef<BufferGeometry, unknown>((_, ref) => {
     // Update opacity
     geometry.attributes.opacity.array.set(newAnimationState.opacities);
     geometry.attributes.opacity.needsUpdate = true;
-    console.timeEnd('GPU Sync')
 
     setAnimationState(newAnimationState);
   }, [ref]);
@@ -62,11 +59,9 @@ export const Particles = forwardRef<BufferGeometry, unknown>((_, ref) => {
   useEffect(() => {
     if (import.meta.hot) {
       import.meta.hot.accept(() => {
-        console.time('HMR Update')
         // Regenerate animation state when HMR triggers
         const newAnimationState = combinedAttributes();
         setAnimationState(newAnimationState);
-        console.timeEnd('HMR Update')
       });
     }
   }, []);
