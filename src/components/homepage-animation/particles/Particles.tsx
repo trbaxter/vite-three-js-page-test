@@ -1,19 +1,48 @@
-import { forwardRef, MutableRefObject, useEffect } from 'react';
+import { forwardRef, MutableRefObject, useEffect, useState } from 'react';
 import { combinedShaders } from './shaders/combinedShaders.ts';
 import { combinedAttributes } from './attributes/combinedAttributes.ts';
 import { HandleFrameAnimation } from './utils/HandleFrameAnimation.ts';
 import { useThree } from '@react-three/fiber';
 import { BufferGeometry } from 'three';
 
-export const Particles = forwardRef<BufferGeometry>((_, ref) => {
-
-  const shaders = combinedShaders();
-  const particles = combinedAttributes();
+export const Particles = forwardRef<BufferGeometry, unknown>((_, ref) => {
+  const [animationState, setAnimationState] = useState(combinedAttributes);
   const { gl } = useThree();
 
-  HandleFrameAnimation(ref as MutableRefObject<BufferGeometry>,
-    particles.oscillatingIndices, particles.positions);
+  // Handle dynamic updates when ref or animation state changes
+  useEffect(() => {
+    if (typeof ref === 'function' || !ref || !(ref as MutableRefObject<BufferGeometry>).current) {
+      return;
+    }
 
+    const geometry = (ref as MutableRefObject<BufferGeometry>).current;
+
+    console.time('Combined Attributes');
+    const newAnimationState = combinedAttributes();
+    console.timeEnd('Combined Attributes');
+
+    console.time('GPU Sync')
+    // Update position
+    geometry.attributes.position.array.set(newAnimationState.positions);
+    geometry.attributes.position.needsUpdate = true;
+
+    // Update color
+    geometry.attributes.color.array.set(newAnimationState.colors);
+    geometry.attributes.color.needsUpdate = true;
+
+    // Update size
+    geometry.attributes.size.array.set(newAnimationState.sizes);
+    geometry.attributes.size.needsUpdate = true;
+
+    // Update opacity
+    geometry.attributes.opacity.array.set(newAnimationState.opacities);
+    geometry.attributes.opacity.needsUpdate = true;
+    console.timeEnd('GPU Sync')
+
+    setAnimationState(newAnimationState);
+  }, [ref]);
+
+  // Handle window resizing
   useEffect(() => {
     const handleResize = () => {
       const pixelRatio = Math.min(window.devicePixelRatio, 10);
@@ -29,35 +58,56 @@ export const Particles = forwardRef<BufferGeometry>((_, ref) => {
     };
   }, [gl]);
 
+  // HMR handler for updating animation state
+  useEffect(() => {
+    if (import.meta.hot) {
+      import.meta.hot.accept(() => {
+        console.time('HMR Update')
+        // Regenerate animation state when HMR triggers
+        const newAnimationState = combinedAttributes();
+        setAnimationState(newAnimationState);
+        console.timeEnd('HMR Update')
+      });
+    }
+  }, []);
+
+
+  // Frame-by-frame animation logic
+  HandleFrameAnimation(
+    ref as MutableRefObject<BufferGeometry>,
+    animationState.oscillatingIndices,
+    animationState.positions
+  );
+
   return (
     <points>
       <bufferGeometry ref={ref}>
         <bufferAttribute
           attach="attributes-position"
-          array={particles.positions}
+          array={animationState.positions}
           itemSize={3}
-          count={particles.positions.length / 3}
+          count={animationState.positions.length / 3}
         />
         <bufferAttribute
           attach="attributes-color"
-          array={particles.colors}
+          array={animationState.colors}
           itemSize={3}
-          count={particles.colors.length}
+          count={animationState.colors.length / 3}
         />
         <bufferAttribute
           attach="attributes-size"
-          array={particles.sizes}
+          array={animationState.sizes}
           itemSize={1}
-          count={particles.sizes.length}
+          count={animationState.sizes.length}
         />
         <bufferAttribute
           attach="attributes-opacity"
-          array={particles.opacities}
+          array={animationState.opacities}
           itemSize={1}
-          count={particles.opacities.length}
+          count={animationState.opacities.length}
         />
       </bufferGeometry>
-      <primitive object={shaders} attach="material" />
+      <primitive object={combinedShaders()} attach="material" />
     </points>
   );
 });
