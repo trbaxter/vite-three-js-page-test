@@ -1,4 +1,4 @@
-import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeParticles.ts';
+import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeAnimation.ts';
 
 /**
  * Generates a random opacity value based on the color's opacity configuration.

@@ -1,5 +1,5 @@
 import { Color } from 'three';
-import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeParticles.ts';
+import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeAnimation.ts';
 
 /**
  * Validates that the total percentage in particleConfig.colorOptions equals 100% (1.0).

@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber';
-import { initializeParticles } from '@components/homepage-animation/particles/initialization/initializeParticles.ts';
+import { initializeParticles } from '@components/homepage-animation/particles/initialization/initializeAnimation.ts';
 import { MutableRefObject } from 'react';
 import { updateAllParticlePositions } from '../attributes/particlePositions.ts';
 import { BufferGeometry } from 'three';
