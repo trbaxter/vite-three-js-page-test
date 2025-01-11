@@ -40,7 +40,7 @@ export function UsePageTransitions() {
           navigateAfterFade();
         }
       },
-      { once: true }
+      { once: true, passive: false }
     );
   };
 }
