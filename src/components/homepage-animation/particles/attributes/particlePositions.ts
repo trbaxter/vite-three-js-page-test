@@ -1,6 +1,6 @@
 import { calculateRadialDirection } from './particleDirectionality.ts';
 import { calculateOscillation } from './particleOscillations.ts';
-import { particleConfig } from '../calculations/updateGeometry';
+import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeParticles.ts';
 
 /**
  * Updates positions for all particles dynamically based on time and oscillation.

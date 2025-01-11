@@ -1,4 +1,4 @@
-import { particleConfig } from '../calculations/updateGeometry';
+import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeParticles.ts';
 
 /**
  * Generates a random size for a particle based on the configured size range.

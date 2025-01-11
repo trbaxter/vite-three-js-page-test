@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber';
-import { updateGeometry } from '../calculations/updateGeometry.ts';
+import { initializeParticles } from '@components/homepage-animation/particles/initialization/initializeParticles.ts';
 import { MutableRefObject } from 'react';
 import { updateAllParticlePositions } from '../attributes/particlePositions.ts';
 import { BufferGeometry } from 'three';
@@ -24,6 +24,6 @@ export function handleFrameAnimation(
     updateAllParticlePositions(positions, time);
 
     // Update the geometry with new positions
-    updateGeometry(particlesRef.current, { position: positions });
+    initializeParticles(particlesRef.current, { position: positions });
   });
 }

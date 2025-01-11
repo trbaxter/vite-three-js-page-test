@@ -1,5 +1,5 @@
 import { forwardRef, MutableRefObject, useEffect } from 'react';
-import { initializeGeometry, particleConfig, updateGeometry } from './calculations/updateGeometry';
+import { initializeGeometry, particleConfig, initializeParticles } from '@components/homepage-animation/particles/initialization/initializeParticles.ts';
 import { useThree } from '@react-three/fiber';
 import { BufferGeometry } from 'three';
 
@@ -27,7 +27,7 @@ export const Particles = forwardRef<BufferGeometry, unknown>((_, ref) => {
       const geometry = (ref as MutableRefObject<BufferGeometry>).current;
 
       // Dynamically update geometry (e.g., if particleConfig changes)
-      updateGeometry(geometry, {
+      initializeParticles(geometry, {
         position: new Float32Array(particleConfig.particleCount * 3), // Example: Updated positions
         color: new Float32Array(particleConfig.particleCount * 3), // Example: Updated colors
       });
