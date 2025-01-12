@@ -5,17 +5,17 @@ import { brainCurveVectorArray } from '../../utils/brain-animation/brainCurveVec
 import { RotateGroupFrame } from './RotateGroupFrame.tsx';
 
 export function BrainAnimation() {
-  const curves = brainCurveVectorArray();
+    const curves = brainCurveVectorArray();
 
-  return (
-    <Canvas camera={{ position: [0, 0, 0.3], near: 0.001, far: 5 }}>
-      <color attach="background" args={['black']} />
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <RotateGroupFrame>
-        <Veins curves={curves} />
-        <BrainParticles curves={curves} />
-      </RotateGroupFrame>
-    </Canvas>
-  );
+    return (
+        <Canvas camera={{ position: [0, 0, 0.3], near: 0.001, far: 5 }}>
+            <color attach="background" args={['black']} />
+            <ambientLight />
+            <pointLight position={[10, 10, 10]} />
+            <RotateGroupFrame>
+                <Veins curves={curves} />
+                <BrainParticles curves={curves} />
+            </RotateGroupFrame>
+        </Canvas>
+    );
 }

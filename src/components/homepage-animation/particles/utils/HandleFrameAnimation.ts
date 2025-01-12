@@ -5,19 +5,19 @@ import { UpdateParticlePosition } from '../calculations/updatePositioning.ts';
 import { BufferGeometry } from 'three';
 
 export function HandleFrameAnimation(
-  particlesRef: MutableRefObject<BufferGeometry | null>,
-  oscillatingIndices: number[],
-  positions: Float32Array
+    particlesRef: MutableRefObject<BufferGeometry | null>,
+    oscillatingIndices: number[],
+    positions: Float32Array
 ) {
-  useFrame(({ clock }) => {
-    if (!particlesRef.current) return;
+    useFrame(({ clock }) => {
+        if (!particlesRef.current) return;
 
-    const time = clock.getElapsedTime();
-    oscillatingIndices.forEach((index) => {
-      UpdateParticlePosition(index, positions, time);
+        const time = clock.getElapsedTime();
+        oscillatingIndices.forEach((index) => {
+            UpdateParticlePosition(index, positions, time);
+        });
+
+        updateGeometry(particlesRef.current);
     });
-
-    updateGeometry(particlesRef.current);
-  });
 }
 

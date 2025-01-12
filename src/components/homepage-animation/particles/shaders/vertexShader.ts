@@ -1,5 +1,5 @@
 export const vertexShader =
-  `
+    `
     precision lowp float;
   
     attribute float size;

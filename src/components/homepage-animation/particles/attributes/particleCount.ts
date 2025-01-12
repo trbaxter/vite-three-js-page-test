@@ -1,3 +1,3 @@
 export const particleCount = {
-  count: 120000
+    count: 120000
 };

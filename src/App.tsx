@@ -5,15 +5,15 @@ import { HomepageAnimation } from './components/homepage-animation/HomepageAnima
 
 export default function App() {
 
-  return (
-    <>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<HomepageAnimation />} />
-        <Route path="/ai" element={<BrainAnimation />} />
-      </Routes>
-    </>
-  );
+    return (
+        <>
+            <Navigation />
+            <Routes>
+                <Route path="/" element={<HomepageAnimation />} />
+                <Route path="/ai" element={<BrainAnimation />} />
+            </Routes>
+        </>
+    );
 }
 
 
