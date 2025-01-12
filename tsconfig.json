@@ -23,14 +23,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "baseUrl": "./",
-    "paths": {
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@utils/brain-animation": [
-        "src/utils/brain-animation/*"
-      ]
-    },
     "composite": true
   },
   "include": [
