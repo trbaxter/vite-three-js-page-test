@@ -1,51 +1,43 @@
-import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeAnimation.ts';
+import { defaultAnimationConfig } from '../config/animationConfig';
 
 /**
  * Generates a random opacity value based on the color's opacity configuration.
- * @param colorIndex Index of the color in particleConfig.colorOptions.
- * @returns Random opacity value within the specified range.
+ * @param colorOptions Array of color options with opacity values.
+ * @returns A random opacity value based on the selected color option.
  */
-function getRandomOpacityForColor(colorIndex: number): number {
-  const colorConfig = particleConfig.colorOptions[colorIndex];
-  return colorConfig.opacity * (0.8 + Math.random() * 0.4); // Add some randomness
+function getRandomOpacityForColor(colorOptions: Array<{ opacity: number }>): number {
+  const randomColorIndex = Math.floor(Math.random() * colorOptions.length);
+  const colorConfig = colorOptions[randomColorIndex];
+  return colorConfig.opacity * (0.8 + Math.random() * 0.4); // Add randomness to opacity
 }
 
 /**
- * Generates an initial array of particle opacities based on color configurations.
+ * Generates an initial array of particle opacities based on defaultAnimationConfig.
  * @returns Float32Array containing the initial opacities.
  */
 export function particleOpacities(): Float32Array {
-  const count = particleConfig.particleCount; // Dynamically retrieve particle count
-  const opacities = new Float32Array(count);
+  const { particleCount, colorOptions } = defaultAnimationConfig;
+  const opacities = new Float32Array(particleCount);
 
-  const colorOptions = particleConfig.colorOptions;
-
-  for (let i = 0; i < count; i++) {
-    const randomColorIndex = Math.floor(Math.random() * colorOptions.length);
-    opacities[i] = getRandomOpacityForColor(randomColorIndex);
+  for (let i = 0; i < particleCount; i++) {
+    opacities[i] = getRandomOpacityForColor(colorOptions);
   }
 
   return opacities;
 }
 
 /**
- * Updates the opacities of particles in an existing Float32Array based on color configurations.
+ * Updates the opacities of particles in an existing Float32Array based on defaultAnimationConfig.
  * @param opacitiesArray The existing Float32Array to update.
- * @returns Updated Float32Array with new opacities.
  */
-export function updateParticleOpacities(opacitiesArray: Float32Array): Float32Array {
-  const count = particleConfig.particleCount; // Dynamically retrieve particle count
+export function updateParticleOpacities(opacitiesArray: Float32Array): void {
+  const { particleCount, colorOptions } = defaultAnimationConfig;
 
-  if (opacitiesArray.length !== count) {
+  if (opacitiesArray.length !== particleCount) {
     throw new Error('The size of opacitiesArray must match the particle count.');
   }
 
-  const colorOptions = particleConfig.colorOptions;
-
-  for (let i = 0; i < count; i++) {
-    const randomColorIndex = Math.floor(Math.random() * colorOptions.length);
-    opacitiesArray[i] = getRandomOpacityForColor(randomColorIndex);
+  for (let i = 0; i < particleCount; i++) {
+    opacitiesArray[i] = getRandomOpacityForColor(colorOptions);
   }
-
-  return opacitiesArray;
 }

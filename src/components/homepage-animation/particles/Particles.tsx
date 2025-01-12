@@ -1,38 +1,38 @@
-import { forwardRef, MutableRefObject, useEffect } from 'react';
-import { initializeAnimation, particleConfig, initializeParticles } from '@components/homepage-animation/particles/initialization/initializeAnimation.ts';
-import { useThree } from '@react-three/fiber';
-import { BufferGeometry } from 'three';
+import { useEffect, useRef } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { BufferGeometry, Points } from 'three';
+import { initializeAnimation } from './initialization/initializeAnimation';
+import { handleFrameAnimation } from './utils/handleFrameAnimation';
+import { combinedShaders } from './shaders/combinedShaders'; // Import combinedShaders
+import { useAnimationConfig } from './config/AnimationConfigProvider'; // Import the context
 
-export const Particles = forwardRef<BufferGeometry, unknown>((_, ref) => {
+export const Particles = () => {
   const { gl } = useThree();
+  const geometryRef = useRef<BufferGeometry | null>(null);
+  const pointsRef = useRef<Points | null>(null); // Reference to the Points object
+  const { animationConfig } = useAnimationConfig(); // Access animationConfig context
+  const oscillatingIndicesRef = useRef<number[]>([]); // Mutable array for oscillating indices
 
-  // Handle geometry initialization
+  // Initialize geometry attributes
   useEffect(() => {
-    if (ref && (ref as MutableRefObject<BufferGeometry>).current) {
-      const geometry = (ref as MutableRefObject<BufferGeometry>).current;
+    if (geometryRef.current) {
+      const geometry = geometryRef.current;
 
-      // Initialize geometry attributes from particleConfig
-      initializeAnimation(geometry, {
-        position: new Float32Array(particleConfig.particleCount * 3),
-        color: new Float32Array(particleConfig.particleCount * 3),
-        size: new Float32Array(particleConfig.particleCount),
-        opacity: new Float32Array(particleConfig.particleCount),
-      });
+      // Initialize geometry using the current animationConfig
+      initializeAnimation(geometry, {});
     }
-  }, [ref]);
+  }, [animationConfig]); // Reinitialize if animationConfig changes
 
-  // Handle updates (if needed dynamically)
-  useEffect(() => {
-    if (ref && (ref as MutableRefObject<BufferGeometry>).current) {
-      const geometry = (ref as MutableRefObject<BufferGeometry>).current;
+  // Handle frame-by-frame updates
+  useFrame(({ clock }) => {
+    if (geometryRef.current) {
+      const geometry = geometryRef.current;
+      const time = clock.getElapsedTime();
 
-      // Dynamically update geometry (e.g., if particleConfig changes)
-      initializeParticles(geometry, {
-        position: new Float32Array(particleConfig.particleCount * 3), // Example: Updated positions
-        color: new Float32Array(particleConfig.particleCount * 3), // Example: Updated colors
-      });
+      // Use handleFrameAnimation for frame updates
+      handleFrameAnimation(geometry, time, oscillatingIndicesRef.current);
     }
-  }, [ref]);
+  });
 
   // Handle window resizing
   useEffect(() => {
@@ -41,7 +41,6 @@ export const Particles = forwardRef<BufferGeometry, unknown>((_, ref) => {
       gl.setPixelRatio(pixelRatio);
       gl.setSize(window.innerWidth, window.innerHeight);
     };
-
     handleResize();
 
     window.addEventListener('resize', handleResize);
@@ -51,8 +50,12 @@ export const Particles = forwardRef<BufferGeometry, unknown>((_, ref) => {
   }, [gl]);
 
   return (
-    <points>
-      <bufferGeometry ref={ref} />
+    <points
+      ref={pointsRef}
+      material={combinedShaders()}
+      geometry={geometryRef.current || undefined} // Fix the error by ensuring null is treated as undefined
+    >
+      <bufferGeometry ref={geometryRef} />
     </points>
   );
-});
+};

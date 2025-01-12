@@ -1,29 +1,17 @@
-import { useFrame } from '@react-three/fiber';
-import { initializeParticles } from '@components/homepage-animation/particles/initialization/initializeAnimation.ts';
-import { MutableRefObject } from 'react';
-import { updateAllParticlePositions } from '../attributes/particlePositions.ts';
+import { updateAnimation } from '../update/updateAnimation';
 import { BufferGeometry } from 'three';
 
 /**
  * Handles frame-by-frame updates for the animation.
- * - Updates particle positions dynamically based on time and oscillation.
- * - Synchronizes geometry changes with the GPU.
- * @param particlesRef Mutable reference to the BufferGeometry.
- * @param positions Float32Array of particle positions.
+ * @param geometry The BufferGeometry to update.
+ * @param time Current animation time.
+ * @param oscillatingIndices Mutable array of oscillating particle indices.
  */
 export function handleFrameAnimation(
-  particlesRef: MutableRefObject<BufferGeometry | null>,
-  positions: Float32Array
+  geometry: BufferGeometry,
+  time: number,
+  oscillatingIndices: number[]
 ): void {
-  useFrame(({ clock }) => {
-    if (!particlesRef.current) return;
-
-    const time = clock.getElapsedTime();
-
-    // Update all particle positions dynamically
-    updateAllParticlePositions(positions, time);
-
-    // Update the geometry with new positions
-    initializeParticles(particlesRef.current, { position: positions });
-  });
+  // Call updateAnimation to apply updates
+  updateAnimation(geometry, time, oscillatingIndices);
 }

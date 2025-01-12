@@ -1,7 +1,7 @@
 /**
  * Configuration for particle-related settings.
  */
-export interface ParticleConfig {
+export interface AnimationConfig {
   particleCount: number; // Total number of particles
   size: {
     minSize: number; // Minimum size for particles
@@ -20,5 +20,7 @@ export interface ParticleConfig {
   oscillation: {
     amplitude: number; // Oscillation amplitude
     frequency: number; // Oscillation frequency
+    percentage: number; // Percentage of oscillating particles
+    time: number; // Oscillating period
   };
 }

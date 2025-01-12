@@ -1,23 +1,23 @@
-import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeAnimation.ts';
+import { defaultAnimationConfig } from '../config/animationConfig';
 
 /**
- * Generates a random size for a particle based on the configured size range.
+ * Generates a random size for a particle based on the configured size range in defaultAnimationConfig.
  * @returns A random particle size.
  */
 function generateRandomSize(): number {
-  const { minSize, maxSize } = particleConfig.size;
+  const { minSize, maxSize } = defaultAnimationConfig.size;
   return minSize + Math.random() * (maxSize - minSize);
 }
 
 /**
- * Generates an array of initial particle sizes.
+ * Generates an array of initial particle sizes based on defaultAnimationConfig.
  * @returns Float32Array containing the initial sizes.
  */
 export function particleSizes(): Float32Array {
-  const count = particleConfig.particleCount; // Dynamically retrieve particle count
-  const sizes = new Float32Array(count);
+  const { particleCount } = defaultAnimationConfig;
+  const sizes = new Float32Array(particleCount);
 
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < particleCount; i++) {
     sizes[i] = generateRandomSize();
   }
 
@@ -25,20 +25,13 @@ export function particleSizes(): Float32Array {
 }
 
 /**
- * Updates the sizes of particles in an existing Float32Array.
+ * Updates the sizes of particles in an existing Float32Array based on defaultAnimationConfig.
  * @param sizesArray The existing Float32Array to update.
- * @returns Updated Float32Array containing new particle sizes.
  */
-export function updateParticleSizes(sizesArray: Float32Array): Float32Array {
-  const count = particleConfig.particleCount;
+export function updateParticleSizes(sizesArray: Float32Array): void {
+  const { size } = defaultAnimationConfig;
 
-  if (sizesArray.length !== count) {
-    throw new Error('The size of sizesArray must match the particle count.');
+  for (let i = 0; i < sizesArray.length; i++) {
+    sizesArray[i] = size.minSize + Math.random() * (size.maxSize - size.minSize);
   }
-
-  for (let i = 0; i < count; i++) {
-    sizesArray[i] = generateRandomSize();
-  }
-
-  return sizesArray;
 }

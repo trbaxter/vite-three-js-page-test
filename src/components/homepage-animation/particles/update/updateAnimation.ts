@@ -1,34 +1,60 @@
 import { BufferGeometry } from 'three';
+import { updateAllParticlePositions } from '../attributes/particlePositions';
+import { updateParticleColors } from '../attributes/particleColors';
+import { updateParticleSizes } from '../attributes/particleSizes';
+import { updateParticleOpacities } from '../attributes/particleOpacities';
+import { updateParticleDirections } from '../attributes/particleDirectionality';
+import { updateParticleOscillations } from '../attributes/particleOscillations';
+import { defaultAnimationConfig } from '../config/animationConfig';
 
 /**
- * Updates specific attributes of the geometry.
+ * Updates the geometry attributes dynamically based on time and defaultAnimationConfig.
  */
 export function updateAnimation(
   geometry: BufferGeometry,
-  updatedAttributes: {
-    position?: Float32Array;
-    color?: Float32Array;
-    size?: Float32Array;
-    opacity?: Float32Array;
-  }
+  time: number,
+  oscillatingIndices: number[]
 ): void {
-  if (updatedAttributes.position) {
-    geometry.attributes.position.array.set(updatedAttributes.position);
-    geometry.attributes.position.needsUpdate = true;
+  const { oscillation } = defaultAnimationConfig;
+
+  // Update positions
+  if (geometry.attributes.position) {
+    const positions = geometry.attributes.position.array as Float32Array;
+    updateAllParticlePositions(positions, time);
+    geometry.attributes.position.needsUpdate = false;
   }
 
-  if (updatedAttributes.color) {
-    geometry.attributes.color.array.set(updatedAttributes.color);
-    geometry.attributes.color.needsUpdate = true;
+  // Update colors
+  if (geometry.attributes.color) {
+    const colors = geometry.attributes.color.array as Float32Array;
+    updateParticleColors(colors);
+    geometry.attributes.color.needsUpdate = false;
   }
 
-  if (updatedAttributes.size) {
-    geometry.attributes.size.array.set(updatedAttributes.size);
-    geometry.attributes.size.needsUpdate = true;
+  // Update sizes
+  if (geometry.attributes.size) {
+    const sizes = geometry.attributes.size.array as Float32Array;
+    updateParticleSizes(sizes);
+    geometry.attributes.size.needsUpdate = false;
   }
 
-  if (updatedAttributes.opacity) {
-    geometry.attributes.opacity.array.set(updatedAttributes.opacity);
-    geometry.attributes.opacity.needsUpdate = true;
+  // Update opacities
+  if (geometry.attributes.opacity) {
+    const opacities = geometry.attributes.opacity.array as Float32Array;
+    updateParticleOpacities(opacities);
+    geometry.attributes.opacity.needsUpdate = false;
+  }
+
+  // Update directions (if applicable)
+  if (geometry.attributes.direction) {
+    const directions = geometry.attributes.direction.array as Float32Array;
+    updateParticleDirections(directions, geometry.attributes.position.array as Float32Array);
+    geometry.attributes.direction.needsUpdate = false;
+  }
+
+  // Update oscillating particles
+  if (oscillation) {
+    updateParticleOscillations(oscillatingIndices);
   }
 }
+

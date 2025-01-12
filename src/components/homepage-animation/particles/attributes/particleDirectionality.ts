@@ -41,16 +41,17 @@ export function calculateRadialDirection(x: number, y: number, z: number): Vecto
 }
 
 /**
- * Generates an array of initial radial directions for particles.
+ * Generates an array of initial radial directions for particles based on their positions.
  * @param positions Float32Array of particle positions (x, y, z for each particle).
- * @returns Array of Vector3 objects representing the radial directions for each particle.
+ * @returns Float32Array containing the normalized directions.
  */
-export function generateInitialParticleDirections(positions: Float32Array): Vector3[] {
+export function generateInitialParticleDirections(positions: Float32Array): Float32Array {
   validatePositions(positions);
 
-  const directions: Vector3[] = [];
-  forEachParticle(positions, (x, y, z) => {
-    directions.push(calculateRadialDirection(x, y, z));
+  const directions = new Float32Array(positions.length);
+  forEachParticle(positions, (x, y, z, index) => {
+    const direction = calculateRadialDirection(x, y, z);
+    directions.set([direction.x, direction.y, direction.z], index * 3);
   });
 
   return directions;
@@ -58,16 +59,17 @@ export function generateInitialParticleDirections(positions: Float32Array): Vect
 
 /**
  * Updates the radial directions of particles based on their positions.
- * @param directionsArray Existing array of Vector3 radial directions to update.
+ * @param directionsArray Float32Array of existing particle directions to update.
  * @param positions Float32Array of particle positions (x, y, z for each particle).
  */
 export function updateParticleDirections(
-  directionsArray: Vector3[],
+  directionsArray: Float32Array,
   positions: Float32Array
 ): void {
   validatePositions(positions);
 
   forEachParticle(positions, (x, y, z, index) => {
-    directionsArray[index] = calculateRadialDirection(x, y, z);
+    const direction = calculateRadialDirection(x, y, z);
+    directionsArray.set([direction.x, direction.y, direction.z], index * 3);
   });
 }

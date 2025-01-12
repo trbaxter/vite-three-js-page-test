@@ -1,12 +1,12 @@
 import { Color } from 'three';
-import { particleConfig } from '@components/homepage-animation/particles/initialization/initializeAnimation.ts';
+import { defaultAnimationConfig } from '../config/animationConfig';
 
 /**
- * Validates that the total percentage in particleConfig.colorOptions equals 100% (1.0).
+ * Validates that the total percentage in defaultAnimationConfig.colorOptions equals 100% (1.0).
  * Throws an error if the sum is invalid.
  */
 function validateColorOptions(): void {
-  const totalPercentage = particleConfig.colorOptions.reduce((sum, option) => sum + option.percentage, 0);
+  const totalPercentage = defaultAnimationConfig.colorOptions.reduce((sum, option) => sum + option.percentage, 0);
 
   if (Math.abs(totalPercentage - 1) > 0.001) {
     throw new Error(
@@ -22,11 +22,11 @@ function validateColorOptions(): void {
  * @returns A Color object for the particle.
  */
 function determineParticleColor(index: number, totalCount: number): Color {
-  if (particleConfig.useGradient) {
+  if (defaultAnimationConfig.useGradient) {
     // Assign a gradient-based color
     const t = index / totalCount; // Fractional index for gradient interpolation
-    const startColor = new Color(particleConfig.colorOptions[0].color);
-    const endColor = new Color(particleConfig.colorOptions[particleConfig.colorOptions.length - 1].color);
+    const startColor = new Color(defaultAnimationConfig.colorOptions[0].color);
+    const endColor = new Color(defaultAnimationConfig.colorOptions[defaultAnimationConfig.colorOptions.length - 1].color);
     return new Color().lerpColors(startColor, endColor, t);
   } else {
     // Assign a random color based on percentage distribution
@@ -35,14 +35,14 @@ function determineParticleColor(index: number, totalCount: number): Color {
 }
 
 /**
- * Selects a random color based on the percentage distribution in particleConfig.
+ * Selects a random color based on the percentage distribution in defaultAnimationConfig.
  * @returns A randomly selected Color object.
  */
 function getRandomColorByPercentage(): Color {
   const randomValue = Math.random();
   let cumulativePercentage = 0;
 
-  for (const option of particleConfig.colorOptions) {
+  for (const option of defaultAnimationConfig.colorOptions) {
     cumulativePercentage += option.percentage;
     if (randomValue <= cumulativePercentage) {
       return new Color(option.color);
@@ -50,16 +50,16 @@ function getRandomColorByPercentage(): Color {
   }
 
   // Fallback in case of rounding errors
-  return new Color(particleConfig.colorOptions[particleConfig.colorOptions.length - 1].color);
+  return new Color(defaultAnimationConfig.colorOptions[defaultAnimationConfig.colorOptions.length - 1].color);
 }
 
 /**
- * Generates an initial array of particle colors.
+ * Generates an initial array of particle colors based on defaultAnimationConfig.
  * @returns Float32Array containing the initial colors.
  */
 export function particleColors(): Float32Array {
   validateColorOptions(); // Ensure valid percentages
-  const count = particleConfig.particleCount; // Access particle count from centralized config
+  const count = defaultAnimationConfig.particleCount;
   const colors = new Float32Array(count * 3);
 
   for (let i = 0; i < count; i++) {
@@ -71,18 +71,15 @@ export function particleColors(): Float32Array {
 }
 
 /**
- * Updates the colors of particles in an existing Float32Array.
+ * Updates the colors of particles in an existing Float32Array based on defaultAnimationConfig.
  * @param colorsArray The existing Float32Array to update.
- * @returns Updated Float32Array with new colors.
  */
-export function updateParticleColors(colorsArray: Float32Array): Float32Array {
+export function updateParticleColors(colorsArray: Float32Array): void {
   validateColorOptions(); // Ensure valid percentages
-  const count = particleConfig.particleCount; // Access particle count from centralized config
+  const count = defaultAnimationConfig.particleCount;
 
   for (let i = 0; i < count; i++) {
     const color = determineParticleColor(i, count);
     colorsArray.set([color.r, color.g, color.b], i * 3);
   }
-
-  return colorsArray;
 }
